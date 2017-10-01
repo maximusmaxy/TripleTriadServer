@@ -49,7 +49,7 @@ public class Server extends Thread {
             Socket player1Socket = serverSocket.accept();
             ObjectInputStream in1 = new ObjectInputStream(player1Socket.getInputStream());
             ObjectOutputStream out1 = new ObjectOutputStream(player1Socket.getOutputStream());
-            sendMessage(out1, new Message("You are Player 1. Waiting on Player 2.", Message.MESSAGE, null));
+            sendMessage(out1, new Message("Waiting for Player 2 to connect.", Message.MESSAGE, null));
             frame.writeLine("Player 1 connected.");
             
             //player2
@@ -57,8 +57,8 @@ public class Server extends Thread {
             Socket player2Socket = serverSocket.accept();
             ObjectInputStream in2 = new ObjectInputStream(player2Socket.getInputStream());
             ObjectOutputStream out2 = new ObjectOutputStream(player2Socket.getOutputStream());
-            sendMessage(out1, new Message("Player 1 goes first.", Message.TURN, true));
-            sendMessage(out2, new Message("Player 2 goes second. Waiting on player 1.", Message.TURN, false));
+            sendMessage(out1, new Message("Please Choose Rules.", Message.TURN, true));
+            sendMessage(out2, new Message("Waiting for player 1 to choose rules.", Message.TURN, false));
             frame.writeLine("Player 2 connected.");
             
             //connection
@@ -67,13 +67,6 @@ public class Server extends Thread {
             frame.writeLine("Starting Match.");
             player1.start();
             player2.start();
-            
-            //game loop
-            while (true) {
-                sleep(100);
-                if (player1.isExit() || player2.isExit())
-                    break;
-            }
         } catch (Exception e) {
             frame.writeLine(e.getMessage());
             e.printStackTrace();
