@@ -24,7 +24,6 @@ public class PlayerHandler extends Thread {
     private boolean player1;
     private ObjectInputStream playerIn;
     private ObjectOutputStream opponentOut;
-    private boolean exit;
 
     public PlayerHandler(ServerFrame frame, boolean player1, ObjectInputStream playerIn,
             ObjectOutputStream opponentOut) {
@@ -32,7 +31,6 @@ public class PlayerHandler extends Thread {
         this.player1 = player1;
         this.playerIn = playerIn;
         this.opponentOut = opponentOut;
-        exit = false;
     }
 
     @Override
@@ -45,7 +43,6 @@ public class PlayerHandler extends Thread {
                 opponentOut.flush();
                 if (message.getType() == Message.EXIT) {
                     frame.writeLine((player1 ? "Player 2" : "Player 1") + " exited the game.");
-                    exit = true;
                     break;
                 }
             }
@@ -53,9 +50,5 @@ public class PlayerHandler extends Thread {
             frame.writeLine("Error reading " + (player1 ? "Player 1" : "Player 2"));
             e.printStackTrace();
         }
-    }
-
-    public boolean isExit() {
-        return exit;
     }
 }
