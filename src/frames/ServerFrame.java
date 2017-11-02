@@ -18,6 +18,7 @@ public class ServerFrame extends javax.swing.JFrame {
      */
     public ServerFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
         setTitle("Server");
         Server server = new Server(this);
         server.start();
